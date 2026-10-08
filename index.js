@@ -242,9 +242,9 @@ async function run() {
 
       const food = await foodlistfinal.findOne(query);
 
-      if (!food) {
-        return res.status(404).send({ message: "Food item not found." });
-      }
+      // if (!food) {
+      //   return res.status(404).send({ message: "Food item not found." });
+      // }
 
       res.send(food);
     });
