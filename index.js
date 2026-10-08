@@ -4,6 +4,11 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const app = express();
 // var admin = require("firebase-admin");
+const dns =require("dns")
+dns.setServers([
+  '1.1.1.1',
+  '8.8.8.8'
+])
 const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
@@ -36,15 +41,15 @@ const verifyFirebase = async (req, res, next) => {
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount)
 // });
-
-
-
-const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS}@server1.qmz0oye.mongodb.net/?appName=server1`;
+//${process.DB_USERNAMEenv.}
+// mongodb+srv://${process.DB_USERNAMEenv.}:${process.env.DB_PASS}@cluster0.07firde.mongodb.net/?appName=Cluster0
+//${process.env.DB_PASS}
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS}@cluster0.07firde.mongodb.net/?appName=Cluster0`;
 
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
-    strict: true,
+    strict: false,
     deprecationErrors: true,
   },
 });
@@ -242,9 +247,9 @@ async function run() {
 
       const food = await foodlistfinal.findOne(query);
 
-      // if (!food) {
-      //   return res.status(404).send({ message: "Food item not found." });
-      // }
+      if (!food) {
+        return res.status(404).send({ message: "Food item not found." });
+      }
 
       res.send(food);
     });
